@@ -1,0 +1,16 @@
+venv/
+.pytest_cache/
+.vscode/.ropeproject/
+*.egg-info/
+.cache/
+.coverage
+coverage.xml
+htmlcov/
+build/
+dist/
+.eggs/
+doc/_build/
+.tox/
+.idea/
+.python-version
+__pycache__
