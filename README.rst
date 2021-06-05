@@ -19,23 +19,29 @@ pytest-simplehttpserver
     :alt: See Build Status on AppVeyor
 
 Simple fixture to spin up an HTTP server to serve static files for testing
-
-----
-
-This `pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`_'s `cookiecutter-pytest-plugin`_ template.
-
+---
+I needed and easy and practical way to test web scraping functionalities against a real HTTP server.
+This is what I came up with.
 
 Features
 --------
 
-* TODO
+* The fixture spins up a HTTP server that serves static files on port 8000.
 
 
-Requirements
+Usage
 ------------
 
-* TODO
+When running your tests you need to point pytest-simplehttpserver to root
+directory with the static files you want to serve:
+```
+pytest --simplehttpserver-directory /home/user/mock_website/
+```
 
+In your code, just pass the fixture to your tests:
+```
+
+```
 
 Installation
 ------------
