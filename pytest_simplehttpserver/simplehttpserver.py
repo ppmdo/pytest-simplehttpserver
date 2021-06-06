@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import *
 
 import time
-import pytest
 from subprocess import Popen, PIPE
 
 
@@ -21,7 +20,7 @@ def read_status(buff: IO, index=100) -> str:
             return char + read_status(buff, index-1)
 
 
-def _simplehttpserver(directory) -> Popen:
+def http_server_process(directory: str) -> Popen:
     """
     Call python's http.server module as a child process, wait for initialization and yield server for tests.
     """
@@ -42,26 +41,3 @@ def _simplehttpserver(directory) -> Popen:
 
     return server
 
-
-@pytest.fixture
-def simplehttpserver(request):
-    directory = request.config.getoption('simplehttpserver_directory')
-    server = _simplehttpserver(directory)
-
-    yield server
-
-    server.terminate()
-    server.wait()
-
-
-def pytest_addoption(parser):
-    group = parser.getgroup('simplehttpserver')
-    group.addoption(
-        '--simplehttpserver-directory',
-        action='store',
-        dest='simplehttpserver_directory',
-        required=True,
-        help='Path to the directory containing the root (index.html) file to serve.'
-    )
-
-    parser.addini('SIMPLEHTTPSERVER_DIRECTORY', 'Directory containing the root (index.html) file to serve.')
