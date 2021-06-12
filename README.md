@@ -1,6 +1,4 @@
-=======================
-pytest-simplehttpserver
-=======================
+# pytest-simplehttpserver
 
 Simple fixture to spin up an HTTP server to serve static files for testing.
 

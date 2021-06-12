@@ -1,47 +1,27 @@
 import os
 import urllib.request
-from pytest_simplehttpserver.simplehttpserver import _simplehttpserver
+import urllib.error
+
+from pytest_simplehttpserver.simplehttpserver import http_server_process
+
+file_dir = os.path.abspath(os.path.join(__file__, os.pardir))
 
 
 def test_server():
-    proc = _simplehttpserver('datadir')
-    response = urllib.request.urlopen('http://localhost:8000')
-    content = response.read().decode()
-    assert response.status == 200
-    assert len(content) > 0
-    proc.terminate()
-    proc.wait(5)
+    test_dir = os.path.join(file_dir, 'datadir')
+    proc = http_server_process(test_dir)
 
+    try:
+        response = urllib.request.urlopen('http://localhost:8000/')
+        content = response.read().decode()
 
-def test_pytest_plugin(testdir):
-    """Make sure that our plugin works."""
+        assert response.status == 200
+        assert len(content) > 0
 
-    # create a temporary conftest.py file
-    testdir.makeconftest(
-        """
-        import pytest
-        """
-    )
+    except urllib.error.HTTPError:
+        pass
 
-    # create a temporary pytest test file
-    testdir.makepyfile(
-        """
-        import urllib
-        
-        def test_server_ok(simplehttpserver):
-            response = urllib.request.urlopen('http://localhost:8000/')
-            content = response.read().decode()
-            assert response.status == 200
-            assert len(content) > 0
-    """
-    )
+    finally:
+        proc.terminate()
+        proc.wait(5)
 
-    # run all tests with pytest
-    file_dir, _ = os.path.split(__file__)
-
-    result = testdir.runpytest(
-        '--simplehttpserver-directory=' + os.path.join(file_dir, 'datadir')
-    )
-
-    # check that all tests passed
-    result.assert_outcomes(passed=1)
