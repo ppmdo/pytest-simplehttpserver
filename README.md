@@ -1,8 +1,8 @@
 # pytest-simplehttpserver
 
-Simple fixture to spin up an HTTP server to serve static files for testing.
+Simple fixture to spin up a simple HTTP server to serve static files for testing.
 
-Can be used for testing web scrapers, for example.
+Can be used for testing web scrapers, etc.
 
 Features
 --------
