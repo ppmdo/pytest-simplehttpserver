@@ -1,5 +1,4 @@
 import os
-import urllib.request
 
 
 def test_pytest_plugin(testdir):
@@ -67,7 +66,3 @@ def test_pytest_plugin_fail(testdir):
 
     # check that all tests passed
     result.assert_outcomes(errors=1)
-
-
-def test_dummy(simplehttpserver):
-    pass
