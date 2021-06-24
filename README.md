@@ -30,6 +30,23 @@ def mytest(simplehttpserver):
     assert response.status_code == 200
 ```
 
+Additional Configuration
+-----
+If you're using simplehttpserver for multiple tests you can speed up the testing processing by
+limiting the scope for which the server is spawned. It can be one of:
+- function
+- class
+- module
+- package
+- session
+
+Just add the following argument to your command line:
+```shell
+--simplehttpserver-scope session
+```
+*Defaults to "function".*
+
+See: [Pytest Fixture Scopes (Official Documentation)](https://docs.pytest.org/en/6.2.x/fixture.html#scope-sharing-fixtures-across-classes-modules-packages-or-session)
 
 Installation
 ------------
